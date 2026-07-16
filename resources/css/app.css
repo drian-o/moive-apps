@@ -1,0 +1,69 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.trendingSwiper {
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.trendingSwiper .swiper-wrapper {
+    align-items: stretch;
+}
+
+.trendingSwiper .swiper-slide {
+    height: auto !important;
+}
+
+.trendingSwiper img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.trendingSwiper .swiper-slide{
+    width: 210px !important;
+}
+
+
+
+.text-theme{
+    color:var(--theme);
+}
+
+.bg-theme{
+    background-color:var(--theme);
+}
+
+.border-theme{
+    border-color:var(--theme);
+}
+
+.hover-theme:hover{
+    color:var(--theme);
+}
+
+.hover-bg-theme:hover{
+    background-color:var(--theme);
+}
+
+.hover-border-theme:hover{
+    border-color:var(--theme);
+}
