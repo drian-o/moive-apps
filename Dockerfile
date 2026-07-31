@@ -1,25 +1,54 @@
 # syntax=docker/dockerfile:1
 
+# ----------------------------------------------------
+# 1. Build frontend assets (Vite)
+# ----------------------------------------------------
 FROM node:22-alpine AS frontend
+
 WORKDIR /app
-RUN apk add --no-cache python3 make g++
+
 COPY package*.json ./
-RUN npm ci
+
+RUN if [ -f package-lock.json ]; then \
+        npm ci; \
+    else \
+        npm install; \
+    fi
+
 COPY . .
+
 RUN npm run build
 
+
+# ----------------------------------------------------
+# 2. Install Laravel / PHP dependencies
+# ----------------------------------------------------
 FROM composer:2 AS vendor
+
 WORKDIR /app
-COPY composer.json composer.lock ./
-RUN composer install \
-    --no-dev \
-    --prefer-dist \
-    --no-interaction \
-    --no-progress \
-    --optimize-autoloader \
-    --ignore-platform-reqs
+
+# Artisan dan seluruh source harus sudah tersedia sebelum Composer
+# menjalankan script post-autoload-dump / package:discover.
 COPY . .
 
+RUN mkdir -p \
+        bootstrap/cache \
+        storage/framework/cache/data \
+        storage/framework/sessions \
+        storage/framework/views \
+        storage/logs \
+    && composer install \
+        --no-dev \
+        --prefer-dist \
+        --no-interaction \
+        --no-progress \
+        --optimize-autoloader \
+        --ignore-platform-reqs
+
+
+# ----------------------------------------------------
+# 3. Laravel runtime: PHP 8.2 + Apache
+# ----------------------------------------------------
 FROM php:8.2-apache
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
