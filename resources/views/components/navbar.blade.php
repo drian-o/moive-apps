@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-40 border-b border-zinc-800 bg-[#0b1220]/95 backdrop-blur">
+<header class="sticky top-0 z-30 border-b border-zinc-800 bg-[#10131d]/90 backdrop-blur-xl">
 
     <div class="flex h-16 items-center gap-4 px-4 lg:px-8">
 
@@ -28,10 +28,12 @@
             href="{{ route('home') }}"
             class="text-xl font-black text-sky-400 lg:hidden">
 
-                @if(!empty($setting?->logo))
-        <meta property="og:image"
-              content="{{ asset('storage/'.$setting->logo) }}">
-    @endif
+@if(!empty($setting?->logo))
+    <img
+        src="{{ asset('storage/'.$setting->logo) }}"
+        alt="{{ $setting->site_name }}"
+        class="h-9 w-auto">
+@endif
 
         </a>
 
@@ -57,7 +59,7 @@
                 type="text"
                 autocomplete="off"
                 placeholder="Search anime..."
-                class="h-11 w-full rounded-full border border-zinc-700 bg-zinc-900 pl-12 pr-5 text-sm text-white placeholder:text-zinc-500 focus:border-sky-500 focus:outline-none">
+                class="h-12 w-full rounded-xl border border-zinc-700 bg-[#141923] pl-12 pr-5 text-sm text-white placeholder:text-zinc-500 focus:border-sky-500 focus:outline-none">
 
 <div
     id="search-result"
@@ -67,7 +69,7 @@
            overflow-y-auto
            rounded-2xl
            border border-zinc-800
-           bg-zinc-900
+           bg-[#141923]
            shadow-2xl">
 </div>
 
@@ -90,7 +92,7 @@
 
                 <a
     href="{{ route('admin.login') }}"
-    class="rounded-lg border border-zinc-700 px-4 py-2 text-sm transition hover:border-sky-500 hover:text-sky-400">
+    class="rounded-xl bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-600">
 
     Login
 

@@ -7,23 +7,35 @@
 ])
 
 <a href="{{ route($route, $id) }}" class="group block">
+
     <div
-        class="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 transition duration-300 hover:border-sky-500 hover:shadow-xl">
+        class="overflow-hidden rounded-2xl border border-white/5 bg-[#111827] transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/30">
 
         {{-- Poster --}}
-        <div class="relative overflow-hidden">
+        <div class="relative aspect-video overflow-hidden">
 
             <img
-                src="{{ $image }}"
+                src="{{ str_contains($image,'nekopoi.care')
+                    ? route('image.proxy',['url'=>$image])
+                    : $image }}"
                 alt="{{ $title }}"
                 loading="lazy"
-                class="h-56 w-full object-cover transition duration-500 group-hover:scale-110
-                       sm:h-64
-                       md:h-72
-                       lg:h-80">
+                class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
 
+            {{-- Overlay --}}
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+
+            {{-- Time --}}
             <div
-                class="absolute left-2 top-2 rounded-lg bg-sky-500 px-2 py-1 text-[11px] font-semibold text-white shadow">
+                class="absolute left-2 top-2 rounded bg-black/80 px-2 py-1 text-[10px] font-bold text-white backdrop-blur">
+
+                23:40
+
+            </div>
+
+            {{-- Episode --}}
+            <div
+                class="absolute right-2 top-2 rounded bg-sky-500 px-2 py-1 text-[10px] font-bold text-white">
 
                 {{ $episode }}
 
@@ -32,7 +44,11 @@
         </div>
 
         {{-- Info --}}
-        <div class="p-3 sm:p-4">
+        <div class="p-3">
+
+            <p class="mb-1 text-[11px] uppercase tracking-wide text-zinc-500">
+                Latest Episode
+            </p>
 
             <h3
                 class="line-clamp-2 min-h-[42px] text-sm font-semibold leading-5 text-white transition group-hover:text-sky-400">
@@ -43,18 +59,27 @@
 
             <div class="mt-3 flex items-center justify-between">
 
-                <span class="text-xs text-zinc-500">
+                <div class="flex gap-2">
 
-                    AniFlix
+                    <span
+                        class="rounded bg-zinc-800 px-2 py-1 text-[10px] font-semibold text-white">
 
-                </span>
+                        SUB 9
 
-                <span
-                    class="rounded-full bg-zinc-800 px-2 py-1 text-[10px] text-zinc-400">
+                    </span>
 
-                    HD
+                    <span
+                        class="rounded bg-zinc-800 px-2 py-1 text-[10px] font-semibold text-white">
 
-                </span>
+                        DUB 1
+
+                    </span>
+
+                </div>
+
+                <div
+                    class="h-2 w-2 rounded-full bg-green-500">
+                </div>
 
             </div>
 

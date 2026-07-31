@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ads;
 use App\Services\SansekaiAnimeService;
 
 class WatchController extends Controller
@@ -74,6 +75,34 @@ class WatchController extends Controller
             ];
         }
 
+        // ==========================
+        // Banner
+        // ==========================
+        $playerAd = Ads::where('position', 'player')
+            ->where('is_active', 1)
+            ->orderBy('sort_order')
+            ->first();
+
+        $sidebarAd = Ads::where('position', 'sidebar')
+            ->where('is_active', 1)
+            ->orderBy('sort_order')
+            ->first();
+
+        $footerAd = Ads::where('position', 'footer')
+            ->where('is_active', 1)
+            ->orderBy('sort_order')
+            ->first();
+
+        $popupAd = Ads::where('position', 'popup')
+            ->where('is_active', 1)
+            ->orderBy('sort_order')
+            ->first();
+
+        $floatingAd = Ads::where('position', 'floating')
+            ->where('is_active', 1)
+            ->orderBy('sort_order')
+            ->first();
+
         return view('pages.watch', [
 
             'watch' => [
@@ -95,6 +124,12 @@ class WatchController extends Controller
                 'downloads' => $episode['downloadUrl']['qualities'] ?? [],
 
             ],
+
+            'playerAd'   => $playerAd,
+            'sidebarAd'  => $sidebarAd,
+            'footerAd'   => $footerAd,
+            'popupAd'    => $popupAd,
+            'floatingAd' => $floatingAd,
 
         ]);
     }

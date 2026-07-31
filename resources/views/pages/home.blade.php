@@ -2,62 +2,96 @@
 
 @section('content')
 
-<div class="mx-auto max-w-[1700px] space-y-16">
+<div class="relative mx-auto max-w-[1700px] space-y-20 px-5 lg:px-8">
+
+    <div class="absolute -left-52 top-0 h-[500px] w-[500px] rounded-full bg-sky-500/10 blur-[180px]"></div>
+
+    <div class="absolute right-0 top-[900px] h-[450px] w-[450px] rounded-full bg-violet-500/10 blur-[180px]"></div>
+
+    <div class="relative z-10">
+</div>
 
     {{-- HERO --}}
     @if(!empty($ongoingAnime))
 
     @php($hero = $ongoingAnime[0])
 
-    <section class="overflow-hidden rounded-3xl bg-zinc-900">
+<section class="relative overflow-hidden rounded-3xl h-[620px]">
 
-        <div class="flex flex-col lg:flex-row">
+    {{-- Background --}}
+    <img
+        src="{{ $hero['poster'] }}"
+        class="absolute inset-0 h-full w-full object-cover">
 
-            <img
-                src="{{ $hero['poster'] }}"
-                class="w-full lg:w-[330px] h-[420px] object-cover">
+    {{-- Overlay --}}
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-black/20"></div>
 
-            <div class="flex flex-1 flex-col justify-center p-10">
+    {{-- Content --}}
+    <div class="relative z-10 flex h-full max-w-3xl flex-col justify-center px-12">
 
-                <span class="mb-4 w-fit rounded-full bg-sky-500 px-4 py-2 text-sm">
-                    Ongoing Anime
-                </span>
+        <span
+            class="mb-5 w-fit rounded-full bg-sky-500/90 px-4 py-2 text-sm font-semibold">
 
-                <h1 class="text-5xl font-bold">
-                    {{ $hero['title'] }}
-                </h1>
+            2026
 
-                <p class="mt-6 text-zinc-400">
+        </span>
 
-                    Episode {{ $hero['episodes'] }}
+        <h1 class="text-6xl font-black leading-tight">
 
-                </p>
+            {{ $hero['title'] }}
 
-                <a
-                    href="{{ route('anime.show',$hero['animeId']) }}"
-                    class="mt-8 w-fit rounded-xl bg-sky-500 px-8 py-3 font-semibold">
+        </h1>
 
-                    Watch Now
+        <div class="mt-6 flex flex-wrap gap-3">
 
-                </a>
+            <span class="rounded-full bg-white/10 px-4 py-2 text-sm">
+                Adventure
+            </span>
 
-            </div>
+            <span class="rounded-full bg-white/10 px-4 py-2 text-sm">
+                Fantasy
+            </span>
 
+            <span class="rounded-full bg-white/10 px-4 py-2 text-sm">
+                Action
+            </span>
         </div>
-
-    </section>
+        <p class="mt-8 max-w-xl text-zinc-300 leading-8">
+            Episode {{ $hero['episodes'] }}
+        </p>
+        <a
+            href="{{ route('anime.show',$hero['animeId']) }}"
+            class="mt-10 w-fit rounded-xl bg-white px-8 py-4 font-semibold text-black transition hover:scale-105">
+            ▶ Watch Now
+        </a>
+    </div>
+</section>
 
     @endif
 
 
-    {{-- Ongoing Anime --}}
-    <section>
+<section class="grid gap-8 xl:grid-cols-12">
 
-        <h2 class="mb-6 text-2xl font-bold">
-            Ongoing Anime
-        </h2>
+    {{-- Latest Episodes --}}
+    <div class="xl:col-span-8">
 
-        <div class="grid grid-cols-2 gap-5 md:grid-cols-4 xl:grid-cols-6">
+        <div class="mb-6 flex items-center justify-between">
+
+            <h2 class="text-3xl font-bold">
+                Latest Episodes
+            </h2>
+
+            <a
+                href="/anime/unlimited"
+                class="text-sky-400 hover:text-sky-300">
+
+                View All →
+
+            </a>
+
+        </div>
+
+        <div class="grid grid-cols-2 gap-5 md:grid-cols-3">
 
             @foreach($ongoingAnime as $anime)
 
@@ -72,32 +106,52 @@
 
         </div>
 
-    </section>
+    </div>
 
+    {{-- Popular Sidebar --}}
+    <div class="xl:col-span-4">
 
-    {{-- Completed Anime --}}
-    <section>
-
-        <h2 class="mb-6 text-2xl font-bold">
-            Completed Anime
+        <h2 class="mb-6 text-3xl font-bold">
+            Popular Anime
         </h2>
 
-        <div class="grid grid-cols-2 gap-5 md:grid-cols-4 xl:grid-cols-6">
+        <div class="space-y-4">
 
-            @foreach($completedAnime as $anime)
+            @foreach(array_slice($completedAnime,0,5) as $anime)
 
-                <x-anime-card
-                    :id="$anime['animeId']"
-                    :image="$anime['poster']"
-                    :title="$anime['title']"
-                    :episode="'⭐ '.$anime['score']"
-                />
+                <a
+                    href="{{ route('anime.show',$anime['animeId']) }}"
+                    class="flex gap-4 rounded-2xl bg-zinc-900 p-3 transition hover:bg-zinc-800">
+
+                    <img
+                        src="{{ $anime['poster'] }}"
+                        class="h-24 w-16 rounded-lg object-cover">
+
+                    <div class="flex flex-1 flex-col justify-center">
+
+                        <h3 class="line-clamp-2 font-semibold">
+
+                            {{ $anime['title'] }}
+
+                        </h3>
+
+                        <p class="mt-2 text-sm text-zinc-400">
+
+                            ⭐ {{ $anime['score'] }}
+
+                        </p>
+
+                    </div>
+
+                </a>
 
             @endforeach
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
     {{-- Latest Donghua --}}
@@ -124,11 +178,16 @@
                     </h3>
 
                 </a>
+                
 
             @endforeach
 
         </div>
-
+                <a
+                href="{{ route('donghua.latest') }}"
+                class="text-sky-400 hover:underline">
+                View All →
+            </a>
     </section>
 
 
@@ -194,6 +253,33 @@
         </div>
 
     </section>
+    <section>
+
+ <section>
+
+    <h2 class="mb-6 text-2xl font-bold">
+        TEST Recommended Hentai
+    </h2>
+
+    <div class="grid grid-cols-2 gap-5 md:grid-cols-4">
+
+        @foreach($recommendedHentai as $item)
+
+            <div class="border border-red-500 p-3">
+
+                <img
+                    src="{{ $item['thumbnail'] }}"
+                    style="width:100%;height:300px;object-fit:cover;">
+
+                <p>{{ $item['title'] }}</p>
+
+            </div>
+
+        @endforeach
+
+    </div>
+
+</section>
 
 </div>
 

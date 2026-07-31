@@ -3,6 +3,7 @@ import '../css/app.css';
 
 import Hls from 'hls.js';
 import Alpine from 'alpinejs';
+import 'flowbite';
 
 window.Hls = Hls;
 window.Alpine = Alpine;
@@ -165,5 +166,39 @@ result.innerHTML = list.slice(0, 8).map(anime => `
         });
 
     }
+
+});
+
+new Swiper('.recommended-swiper', {
+
+    slidesPerView: 'auto',
+
+    spaceBetween: 20,
+
+    grabCursor: true,
+
+    navigation: {
+
+        nextEl: '.recommended-next',
+
+        prevEl: '.recommended-prev',
+
+    },
+
+    breakpoints: {
+
+        640: {
+
+            spaceBetween: 20,
+
+        },
+
+        1024: {
+
+            spaceBetween: 24,
+
+        },
+
+    },
 
 });

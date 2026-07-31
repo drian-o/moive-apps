@@ -35,9 +35,15 @@ return [
         ],
     ],
     
-    'llamagen' => [
-    'key' => env('LLAMAGEN_API_KEY'),
-    'url' => 'https://api.llamagen.ai',
+    'gemini' => [
+    'api_key' => env('GEMINI_API_KEY'),
+    'model' => env('GEMINI_MODEL', 'gemini-2.5-flash'),
+    ],
+    
+    'nawala' => [
+    'base_url' => env('NAWALA_BASE_URL'),
+    'api_key'  => env('NAWALA_API_KEY'),
+    'shortlink_domain' => env('NAWALA_SHORTLINK_DOMAIN'),
 ],
 
 ];
